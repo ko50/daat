@@ -7,6 +7,6 @@ class Ping implements CommandAction {
 
   @override
   Future<void> action(TextChannel c, _, __) async {
-    await c.send(content: "pong");
+    await c.sendMessage(MessageBuilder.content("pong"));
   }
 }

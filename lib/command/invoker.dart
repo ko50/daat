@@ -7,16 +7,18 @@ class CommandInvoker {
   static const String PREFIX = "?";
 
   Future<void> invoke(Message message) async {
+    final TextChannel? channel = message.channel.getFromCache();
     final List<String> contents = message.content.split(' ');
     final String prefix = contents[0][0];
     final String commandName = contents[0].substring(1);
     final List<String> orders = contents.length >= 2 ? contents.sublist(1) : [];
 
+    if (channel == null) return;
     if (prefix != PREFIX) return;
 
     final CommandAction action = _selectCommandAction(commandName);
 
-    await action.action(message.channel, message.author, orders);
+    await action.action(channel, message.author, orders);
     log(message);
   }
 

@@ -5,7 +5,7 @@ import 'package:vcnotify/command/invoker.dart';
 class VCNotify extends Nyxx {
   final CommandInvoker _commandInvoker = CommandInvoker();
 
-  VCNotify(String token) : super(token);
+  VCNotify(String token) : super(token, GatewayIntents.none);
 
   void onset() async {
     print("Starting...");
