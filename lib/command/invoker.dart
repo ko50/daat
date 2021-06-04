@@ -4,7 +4,7 @@ import 'package:vcnotify/command/action/action.dart';
 import 'package:vcnotify/command/action/ping.dart';
 
 class CommandInvoker {
-  static const String PREFIX = "!";
+  static const String PREFIX = "?";
 
   Future<void> invoke(Message message) async {
     final List<String> contents = message.content.split(' ');
@@ -17,6 +17,7 @@ class CommandInvoker {
     final CommandAction action = _selectCommandAction(commandName);
 
     await action.action(message.channel, message.author, orders);
+    log(message);
   }
 
   CommandAction _selectCommandAction(String name) {
@@ -26,5 +27,14 @@ class CommandInvoker {
       default:
         throw Exception("Could not find any commands that has specified name");
     }
+  }
+
+  void log(Message message) {
+    print(
+        "${message.author.username} \t\t\t on: ${DateTime.now().toIso8601String()}");
+    print("\t\t\t in: ${message.channel.id}");
+    print("${message.content}");
+    print(
+        "----------------------------------------------------------------------------------");
   }
 }
