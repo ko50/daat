@@ -1,4 +1,5 @@
 import 'package:nyxx/nyxx.dart';
+
 import 'package:vcnotify/command/action/action.dart';
 import 'package:vcnotify/command/action/ping.dart';
 
@@ -7,9 +8,9 @@ class CommandInvoker {
 
   Future<void> invoke(Message message) async {
     final List<String> contents = message.content.split(' ');
-    final String prefix = contents[0];
-    final String commandName = contents[1];
-    final List<String> orders = contents.length > 2 ? contents.sublist(2) : [];
+    final String prefix = contents[0][0];
+    final String commandName = contents[0].substring(1);
+    final List<String> orders = contents.length >= 2 ? contents.sublist(1) : [];
 
     if (prefix != PREFIX) return;
 
