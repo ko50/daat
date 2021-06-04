@@ -1,0 +1,29 @@
+import 'package:nyxx/nyxx.dart';
+import 'package:vcnotify/command/action/action.dart';
+import 'package:vcnotify/command/action/ping.dart';
+
+class CommandInvoker {
+  static const String PREFIX = "!";
+
+  Future<void> invoke(Message message) async {
+    final List<String> contents = message.content.split(' ');
+    final String prefix = contents[0];
+    final String commandName = contents[1];
+    final List<String> orders = contents.length > 2 ? contents.sublist(2) : [];
+
+    if (prefix != PREFIX) return;
+
+    final CommandAction action = _selectCommandAction(commandName);
+
+    await action.action(message.channel, message.author, orders);
+  }
+
+  CommandAction _selectCommandAction(String name) {
+    switch (name) {
+      case "ping":
+        return Ping();
+      default:
+        throw Exception("Could not find any commands that has specified name");
+    }
+  }
+}
