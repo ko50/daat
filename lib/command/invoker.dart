@@ -2,6 +2,7 @@ import 'package:nyxx/nyxx.dart';
 
 import 'package:vcnotify/command/action/action.dart';
 import 'package:vcnotify/command/action/ping.dart';
+import 'package:vcnotify/command/action/set_config.dart';
 
 class CommandInvoker {
   static const String PREFIX = "?";
@@ -26,6 +27,8 @@ class CommandInvoker {
     switch (name) {
       case "ping":
         return Ping();
+      case "set":
+        return SetConfig();
       default:
         throw Exception("Could not find any commands that has specified name");
     }

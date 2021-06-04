@@ -1,9 +1,11 @@
 import 'package:nyxx/nyxx.dart';
 
 import 'package:vcnotify/command/invoker.dart';
+import 'package:vcnotify/vc_listener/listener.dart';
 
 class VCNotify extends Nyxx {
   final CommandInvoker _commandInvoker = CommandInvoker();
+  final VCListener _vcListener = VCListener();
 
   VCNotify(String token) : super(token, GatewayIntents.none);
 
@@ -16,5 +18,7 @@ class VCNotify extends Nyxx {
         ));
 
     onMessageReceived.listen((event) => _commandInvoker.invoke(event.message));
+
+    onVoiceStateUpdate.listen((event) => _vcListener.listen(event));
   }
 }
